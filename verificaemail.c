@@ -5,7 +5,7 @@
 #define FALSE 0
 
 
-int VerificaEmail(char email[40]){ 
+int verificaEmail(char email[40]){ 
    if (strlen(email) > 5){
    int arroba = 0, ponto = 0, antesPonto = 0, depoisPonto = 0, i;
    for (i = 0; i < strlen(email); i++) {
@@ -34,10 +34,10 @@ int VerificaEmail(char email[40]){
    } 
    
    if (i == strlen(email) && depoisPonto > 1){
-      return TRUE;
-   }else{
+      
       return FALSE;
-    }
    }
-   return FALSE;
+   }
+  printf("Email invalido!\n"); 
+  return TRUE;
 }

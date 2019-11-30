@@ -6,16 +6,18 @@
 #define FALSE 0
 
 
-int VerificaSenha(char num[40]){
+int verificaSenha(char num[40]){
     int i;
     if (strlen(num) > 4){
         for (i = 0; i < strlen(num); i++) {
             if ((isdigit(num[i])== 0)){
-                return FALSE;
+                return TRUE;
             }
         }
-        return TRUE;
-    }   
-    return FALSE; 
+        
+        return FALSE;
+    } 
+    
+    return TRUE; 
     
 }

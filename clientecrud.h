@@ -21,5 +21,6 @@ void listaClientes(void);
 void exibeCliente(Cliente*);
 void gravaCliente(Cliente*);
 int existClient(char cpf_procurado[11]);
+int clienPed(char cpf_procurado[11]);
 
 #endif

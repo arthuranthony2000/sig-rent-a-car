@@ -6,15 +6,15 @@
 #define FALSE 0
 
 
-int VerificaTelefone(char num_telefone[40]){
+int verificaTelefone(char num_telefone[40]){
     if (strlen(num_telefone) > 7){
         int i;    
         for (i = 0; i < strlen(num_telefone); i++) {
             if ((isdigit(num_telefone[i])== FALSE)){
-                return FALSE;
+                return TRUE;
             }
         }
-        return TRUE;
+        return FALSE;
     }
-    return FALSE; 
+    return TRUE; 
 }

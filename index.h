@@ -12,5 +12,6 @@ void menuAdministrativo(void);
 void menuOperativo(void);
 void menuOperativoUsuario(void);
 void menuOperativoPedido(void);
+void menuRelatorio(void);
 
 #endif

@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "veiculocrud.h"
+#include "verificanome.h"
 
 void cadastraVeiculo(void) {
+  system("clear");
   fflush(stdin);
   Veiculo* veiculo;
   printf("\n\n");
@@ -13,9 +15,11 @@ void cadastraVeiculo(void) {
   printf("######### SIG RENT A CAR ###########\n");
   printf("####################################\n");
   veiculo = (Veiculo*) malloc(sizeof(Veiculo));
+  do{
   printf("Informe o nome do veiculo: \n>>> ");
   scanf(" %39[^\n]", veiculo->nome);
   getchar();
+  }while(verificaNome(veiculo->nome));
   printf("Informe a quantidade do veiculo: \n>>> ");
   scanf(" %39[^\n]", veiculo->estoque);
   getchar();
@@ -25,12 +29,15 @@ void cadastraVeiculo(void) {
   printf("Informe o preço de locação do veiculo: \n>>> ");
   scanf(" %f", &veiculo->precoLocacao);
   getchar();
+  do{
   printf("Informe a placa de locação do veiculo: \n>>> ");
   scanf(" %14[^\n]", veiculo->placa);
-  getchar();  
+  getchar();
+  }while(existVeiculo(veiculo->placa));
   veiculo->status = '1';
   veiculo->kmRodadosVeiculo = 0;
-  printf("Digite o tipo de veiculo: \n0) CARRO\n1) MOTO\n>>>");
+  veiculo->alugado = 0;
+  printf("Digite o tipo de veiculo: \n0) CARRO\n1) MOTO\n>>> ");
   scanf(" %d", &veiculo->tipoVeiculo);
   getchar();  
   printf("###############################\n");
@@ -54,9 +61,10 @@ void gravaVeiculo(Veiculo* veiculo) {
 }
 
 void editaVeiculo(void) {
+  system("clear");
   FILE* fp;
   Veiculo* veiculo;
-  int achou;
+  int achou = 0;
   char resp;
   char procurado[15];
   fp = fopen("veiculo.dat", "r+b");
@@ -71,24 +79,26 @@ void editaVeiculo(void) {
   printf("####################################\n");
   printf("######### SIG RENT A CAR ###########\n");
   printf("####################################\n");
-  printf("Informe a placa do veiculo a ser alterado: ");
+  printf("Informe a placa do veiculo a ser alterado:\n>>> ");
   scanf(" %14[^\n]", procurado);
   veiculo = (Veiculo*) malloc(sizeof(Veiculo));
-  achou = 0;
+
   while((!achou) && (fread(veiculo, sizeof(Veiculo), 1, fp))) {
-   if ((strcmp(veiculo->placa, procurado) == 0) && (veiculo->status == '1')) {
+   if ((strcmp(veiculo->placa, procurado) == 0) && (veiculo->status == '1')){
      achou = 1;
    }
   if (achou) {
     exibeVeiculo(veiculo);
     getchar();
-    printf("Deseja realmente editar este veiculo (s/n)? ");
+    printf("Deseja realmente editar este veiculo (s/n)?\n>>> ");
     scanf("%c", &resp);
     if (resp == 's' || resp == 'S') {
       veiculo = (Veiculo*) malloc(sizeof(Veiculo));
+      do{
       printf("Informe o nome do veiculo: \n>>> ");
       scanf(" %39[^\n]", veiculo->nome);
       getchar();
+      }while(verificaNome(veiculo->nome));
       printf("Informe a quantidade do veiculo: \n>>> ");
       scanf(" %39[^\n]", veiculo->estoque);
       getchar();
@@ -98,11 +108,13 @@ void editaVeiculo(void) {
       printf("Informe o preço de locação do veiculo: \n>>> ");
       scanf(" %f", &veiculo->precoLocacao);
       getchar();
+      do{
       printf("Informe a placa do veiculo: \n>>> ");
       scanf(" %14[^\n]", veiculo->placa);
-      getchar();      
+      getchar();
+      }while(existVeiculo(veiculo->placa));
       veiculo->status = '1';
-      printf("Digite o tipo de veiculo: \n0) CARRO\n1) MOTO\n>>>");
+      printf("Digite o tipo de veiculo: \n0) CARRO\n1) MOTO\n>>> ");
       scanf(" %d",&veiculo->tipoVeiculo);
       getchar();
       fseek(fp, (-1)*sizeof(Veiculo), SEEK_CUR);
@@ -112,11 +124,11 @@ void editaVeiculo(void) {
       printf("\nOk, os dados não foram alterados\n");
       }    
     }else {
-      printf("O veiculo %s não foi encontrado...\n", procurado);
-    }
+      printf("O veiculo com a placa %s não foi encontrado...\n", procurado);
+    }  
+  }
   free(veiculo);
   fclose(fp);
-  }
 }
 
 
@@ -126,17 +138,18 @@ void exibeVeiculo(Veiculo* veiculo){
   printf("Descrição: %s\n", veiculo->descricao);
   printf("Status: %c\n", veiculo->status);
   printf("Placa: %s\n", veiculo->placa);
-  printf("Km Rodados: %d", veiculo->kmRodadosVeiculo);
-  printf("Preço Locação: %f", veiculo->precoLocacao);
+  printf("Km Rodados: %d\n", veiculo->kmRodadosVeiculo);
+  printf("Preço Locação: %f\n", veiculo->precoLocacao);
   printf("Tipo de veiculo: %d\n", veiculo->tipoVeiculo);
   getchar();
   printf("\n");
 }
 
 void buscaVeiculo(void) {
+  system("clear");
   FILE* fp;
   Veiculo* veiculo;
-  int achou;
+  int achou = 0;
   char procurado[15];
   fp = fopen("veiculo.dat", "rb");
   if (fp == NULL) {
@@ -150,7 +163,7 @@ void buscaVeiculo(void) {
   printf("####################################\n");
   printf("######### SIG RENT A CAR ###########\n");
   printf("####################################\n");
-  printf("Informe a placa do veiculo a ser buscado:\n ");
+  printf("Informe a placa do veiculo a ser buscado:\n>>> ");
   scanf(" %14[^\n]", procurado);
   getchar();
   veiculo = (Veiculo*) malloc(sizeof(Veiculo));
@@ -159,16 +172,19 @@ void buscaVeiculo(void) {
    if ((strcmp(veiculo->placa, procurado) == 0) && (veiculo->status == '1')) {
      achou = 1;
    }
-  fclose(fp);
+ 
   if (achou) {
     exibeVeiculo(veiculo);
   } else {
-    printf("O veiculo %s não foi encontrado...\n", veiculo->placa);
+    printf("O veiculo com a placa %s não foi encontrado...\n", procurado);
+  }  
   }
   free(veiculo);
-  }
+   fclose(fp);
 }
+
 void listaVeiculos(void) {
+  system("clear");
   FILE* fp;
   Veiculo* veiculo;
   fp = fopen("veiculo.dat", "rb");
@@ -184,19 +200,39 @@ void listaVeiculos(void) {
   printf("######### SIG RENT A CAR ###########\n");
   printf("####################################\n");
   veiculo = (Veiculo*) malloc(sizeof(Veiculo));
+
+  int op;
+  printf("LISTAR:\n1) TODOS \n2) POR INICIAL DO NOME\n>>> ");
+  scanf(" %d", &op);
+  getchar();
+
+  if(op == 1){
   while(fread(veiculo, sizeof(Veiculo), 1, fp)) {
     if (veiculo->status == '1') {
       exibeVeiculo(veiculo);
     }
+  }
+  }
+  else if(op == 2){
+    char nuser[40];
+    printf("INSIRA AS INICIAIS DO NOME:\n");
+    scanf(" %39[^\n]", nuser);
+    getchar();
+    while(fread(veiculo, sizeof(Veiculo), 1, fp)) {
+    if (veiculo->status == '1' && strncmp(nuser, veiculo->nome, strlen(nuser)) == 0) {
+      exibeVeiculo(veiculo);
+    }
+  }
   }
   fclose(fp);
   free(veiculo);
 }
 
 void excluiVeiculo(void) {
+  system("clear");
   FILE* fp;
   Veiculo* veiculo;
-  int achou;
+  int achou = 0;
   char resp;
   char procurado[15];
   fp = fopen("veiculo.dat", "r+b");
@@ -211,11 +247,11 @@ void excluiVeiculo(void) {
     printf("####################################\n");
     printf("######### SIG RENT A CAR ###########\n");
     printf("####################################\n");
-    printf("Informe a placa do veiculo a ser apagado: ");
+    printf("Informe a placa do veiculo a ser apagado:\n>>> ");
     scanf(" %14[^\n]", procurado);
     getchar();
     veiculo = (Veiculo*) malloc(sizeof(Veiculo));
-    achou = 0;
+
     while((!achou) && (fread(veiculo, sizeof(Veiculo), 1, fp))) {
     if ((strcmp(veiculo->placa, procurado) == 0) && (veiculo->status == '1')) {
       achou = 1;
@@ -224,7 +260,7 @@ void excluiVeiculo(void) {
     
     if (achou) {
       exibeVeiculo(veiculo);
-      printf("Deseja realmente apagar este Veiculo (s/n)? ");
+      printf("Deseja realmente apagar este Veiculo (s/n)?\n>>> ");
       scanf("%c", &resp);
       if (resp == 's' || resp == 'S') {
         veiculo->status = '0';
@@ -235,11 +271,11 @@ void excluiVeiculo(void) {
         printf("\nOk, os dados não foram alterados\n");
       }
     } else {
-      printf("O Veiculo %s não foi encontrado...\n", veiculo->nome);
-    }
-    fclose(fp);
-    free(veiculo);
+      printf("O Veiculo com a placa %s não foi encontrado...\n", procurado);
+    }    
   }
+  fclose(fp);
+  free(veiculo);
 }
 
 int existVeiculo(char placa_procurado[11]){
@@ -254,8 +290,364 @@ int existVeiculo(char placa_procurado[11]){
   veic = (Veiculo*) malloc(sizeof(Veiculo));
   while((fread(veic, sizeof(Veiculo), 1, fp))) {
    if ((strcmp(veic->placa, placa_procurado) == 0) && (veic->status == '1')) {
+     free(veic);
+     fclose(fp);
      return 1;
    }
   }
+  free(veic);
+  fclose(fp);
   return 0;
 }
+
+
+
+NoVeiculo* listaKmRodados(void) {
+  FILE* fp;
+  Veiculo* veic;
+  NoVeiculo* noVeiculo;
+  NoVeiculo* lista;
+  NoVeiculo* atual;
+  NoVeiculo* anter;
+
+  lista = NULL;
+  fp = fopen("veiculo.dat", "rb");
+  if (fp == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+
+  veic = (Veiculo*) malloc(sizeof(Veiculo));
+  while(fread(veic, sizeof(Veiculo), 1, fp)) {
+    if (veic->status == '1') {
+      noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
+      noVeiculo->tipoVeiculo = veic->tipoVeiculo;
+      strcpy(noVeiculo->nome, veic->nome);
+      strcpy(noVeiculo->estoque, veic->estoque);
+      strcpy(noVeiculo->descricao, veic->descricao);
+      noVeiculo->precoLocacao = veic->precoLocacao;
+      strcpy(noVeiculo->placa, veic->placa);
+      noVeiculo->kmRodadosVeiculo = veic->kmRodadosVeiculo;
+      noVeiculo->alugado = veic->alugado;
+      noVeiculo->status = veic->status;
+
+      if (lista == NULL) {
+        lista = noVeiculo;
+        noVeiculo->proximo = NULL;
+      } else if (noVeiculo->kmRodadosVeiculo > lista->kmRodadosVeiculo)  {
+        noVeiculo->proximo = lista;
+        lista = noVeiculo;
+      } else {
+        anter = lista;
+        atual = lista->proximo;
+        while ((atual != NULL) && (noVeiculo->kmRodadosVeiculo < lista->kmRodadosVeiculo)) {
+          anter = atual;
+          atual = atual->proximo;
+        }
+        anter->proximo = noVeiculo;
+        noVeiculo->proximo = atual;
+      }
+    }
+  }
+  fclose(fp);
+  free(veic);
+  return lista;
+}
+
+NoVeiculo* listaKmRodadosInvertida(void) {
+  FILE* fp;
+  Veiculo* veic;
+  NoVeiculo* noVeiculo;
+  NoVeiculo* lista;
+  NoVeiculo* atual;
+  NoVeiculo* anter;
+  lista = NULL;
+  fp = fopen("veiculo.dat", "rb");
+  if (fp == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+
+  veic = (Veiculo*) malloc(sizeof(Veiculo));
+  while(fread(veic, sizeof(Veiculo), 1, fp)) {
+    if (veic->status == '1') {
+      noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
+      noVeiculo->tipoVeiculo = veic->tipoVeiculo;
+      strcpy(noVeiculo->nome, veic->nome);
+      strcpy(noVeiculo->estoque, veic->estoque);
+      strcpy(noVeiculo->descricao, veic->descricao);
+      noVeiculo->precoLocacao = veic->precoLocacao;
+      strcpy(noVeiculo->placa, veic->placa);
+      noVeiculo->kmRodadosVeiculo = veic->kmRodadosVeiculo;
+      noVeiculo->alugado = veic->alugado;
+      noVeiculo->status = veic->status;
+
+      if (lista == NULL) {
+        lista = noVeiculo;
+        noVeiculo->proximo = NULL;
+      } else if (noVeiculo->kmRodadosVeiculo < lista->kmRodadosVeiculo)  {
+        noVeiculo->proximo = lista;
+        lista = noVeiculo;
+      } else {
+        anter = lista;
+        atual = lista->proximo;
+        while ((atual != NULL) && (noVeiculo->kmRodadosVeiculo > lista->kmRodadosVeiculo)) {
+          anter = atual;
+          atual = atual->proximo;
+        }
+        anter->proximo = noVeiculo;
+        noVeiculo->proximo = atual;
+      }
+    }
+  }
+  fclose(fp);
+  free(veic);
+  return lista;
+}
+
+NoVeiculo* listaPreco(void) {
+  FILE* fp;
+  Veiculo* veic;
+  NoVeiculo* noVeiculo;
+  NoVeiculo* lista;
+  NoVeiculo* atual;
+  NoVeiculo* anter;
+
+  lista = NULL;
+  fp = fopen("veiculo.dat", "rb");
+  if (fp == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+
+  veic = (Veiculo*) malloc(sizeof(Veiculo));
+  while(fread(veic, sizeof(Veiculo), 1, fp)) {
+    if (veic->status == '1') {
+      noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
+      noVeiculo->tipoVeiculo = veic->tipoVeiculo;
+      strcpy(noVeiculo->nome, veic->nome);
+      strcpy(noVeiculo->estoque, veic->estoque);
+      strcpy(noVeiculo->descricao, veic->descricao);
+      noVeiculo->precoLocacao = veic->precoLocacao;
+      strcpy(noVeiculo->placa, veic->placa);
+      noVeiculo->kmRodadosVeiculo = veic->kmRodadosVeiculo;
+      noVeiculo->alugado = veic->alugado;
+      noVeiculo->status = veic->status;
+
+      if (lista == NULL) {
+        lista = noVeiculo;
+        noVeiculo->proximo = NULL;
+      } else if (noVeiculo->precoLocacao > lista->precoLocacao)  {
+        noVeiculo->proximo = lista;
+        lista = noVeiculo;
+      } else {
+        anter = lista;
+        atual = lista->proximo;
+        while ((atual != NULL) && (noVeiculo->precoLocacao < lista->precoLocacao)) {
+          anter = atual;
+          atual = atual->proximo;
+        }
+        anter->proximo = noVeiculo;
+        noVeiculo->proximo = atual;
+      }
+    }
+  }
+  fclose(fp);
+  free(veic);
+  return lista;
+}
+
+NoVeiculo* listaPrecoBaixo(void) {
+  FILE* fp;
+  Veiculo* veic;
+  NoVeiculo* noVeiculo;
+  NoVeiculo* lista;
+  NoVeiculo* atual;
+  NoVeiculo* anter;
+
+  lista = NULL;
+  fp = fopen("veiculo.dat", "rb");
+  if (fp == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+
+  veic = (Veiculo*) malloc(sizeof(Veiculo));
+  while(fread(veic, sizeof(Veiculo), 1, fp)) {
+    if (veic->status == '1') {
+      noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
+      noVeiculo->tipoVeiculo = veic->tipoVeiculo;
+      strcpy(noVeiculo->nome, veic->nome);
+      strcpy(noVeiculo->estoque, veic->estoque);
+      strcpy(noVeiculo->descricao, veic->descricao);
+      noVeiculo->precoLocacao = veic->precoLocacao;
+      strcpy(noVeiculo->placa, veic->placa);
+      noVeiculo->kmRodadosVeiculo = veic->kmRodadosVeiculo;
+      noVeiculo->alugado = veic->alugado;
+      noVeiculo->status = veic->status;
+
+      if (lista == NULL) {
+        lista = noVeiculo;
+        noVeiculo->proximo = NULL;
+      } else if (noVeiculo->precoLocacao < lista->precoLocacao)  {
+        noVeiculo->proximo = lista;
+        lista = noVeiculo;
+      } else {
+        anter = lista;
+        atual = lista->proximo;
+        while ((atual != NULL) && (noVeiculo->precoLocacao > lista->precoLocacao)) {
+          anter = atual;
+          atual = atual->proximo;
+        }
+        anter->proximo = noVeiculo;
+        noVeiculo->proximo = atual;
+      }
+    }
+  }
+  fclose(fp);
+  free(veic);
+  return lista;
+}
+
+NoVeiculo* listaAlugado(void) {
+  FILE* fp;
+  Veiculo* veic;
+  NoVeiculo* noVeiculo;
+  NoVeiculo* lista;
+  NoVeiculo* atual;
+  NoVeiculo* anter;
+
+  lista = NULL;
+  fp = fopen("veiculo.dat", "rb");
+  if (fp == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+
+  veic = (Veiculo*) malloc(sizeof(Veiculo));
+  while(fread(veic, sizeof(Veiculo), 1, fp)) {
+    if (veic->status == '1') {
+      noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
+      noVeiculo->tipoVeiculo = veic->tipoVeiculo;
+      strcpy(noVeiculo->nome, veic->nome);
+      strcpy(noVeiculo->estoque, veic->estoque);
+      strcpy(noVeiculo->descricao, veic->descricao);
+      noVeiculo->precoLocacao = veic->precoLocacao;
+      strcpy(noVeiculo->placa, veic->placa);
+      noVeiculo->kmRodadosVeiculo = veic->kmRodadosVeiculo;
+      noVeiculo->alugado = veic->alugado;
+      noVeiculo->status = veic->status;
+
+      if (lista == NULL) {
+        lista = noVeiculo;
+        noVeiculo->proximo = NULL;
+      } else if (noVeiculo->alugado > lista->alugado)  {
+        noVeiculo->proximo = lista;
+        lista = noVeiculo;
+      } else {
+        anter = lista;
+        atual = lista->proximo;
+        while ((atual != NULL) && (noVeiculo->alugado < lista->alugado)) {
+          anter = atual;
+          atual = atual->proximo;
+        }
+        anter->proximo = noVeiculo;
+        noVeiculo->proximo = atual;
+      }
+    }
+  }
+  fclose(fp);
+  free(veic);
+  return lista;
+}
+
+
+NoVeiculo* listaMenosAlugado(void) {
+  FILE* fp;
+  Veiculo* veic;
+  NoVeiculo* noVeiculo;
+  NoVeiculo* lista;
+  NoVeiculo* atual;
+  NoVeiculo* anter;
+  
+  lista = NULL;
+  fp = fopen("veiculo.dat", "rb");
+  if (fp == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+
+  veic = (Veiculo*) malloc(sizeof(Veiculo));
+  while(fread(veic, sizeof(Veiculo), 1, fp)) {
+    if (veic->status == '1') {
+      noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
+      noVeiculo->tipoVeiculo = veic->tipoVeiculo;
+      strcpy(noVeiculo->nome, veic->nome);
+      strcpy(noVeiculo->estoque, veic->estoque);
+      strcpy(noVeiculo->descricao, veic->descricao);
+      noVeiculo->precoLocacao = veic->precoLocacao;
+      strcpy(noVeiculo->placa, veic->placa);
+      noVeiculo->kmRodadosVeiculo = veic->kmRodadosVeiculo;
+      noVeiculo->alugado = veic->alugado;
+      noVeiculo->status = veic->status;
+
+      if (lista == NULL) {
+        lista = noVeiculo;
+        noVeiculo->proximo = NULL;
+      } else if (noVeiculo->alugado < lista->alugado)  {
+        noVeiculo->proximo = lista;
+        lista = noVeiculo;
+      } else {
+        anter = lista;
+        atual = lista->proximo;
+        while ((atual != NULL) && (noVeiculo->alugado > lista->alugado)) {
+          anter = atual;
+          atual = atual->proximo;
+        }
+        anter->proximo = noVeiculo;
+        noVeiculo->proximo = atual;
+      }
+    }
+  }
+  fclose(fp);
+  free(veic);
+  return lista;
+}
+
+void exibeLista(NoVeiculo* lista) {
+  printf("\n\n");
+  printf("######### SIG RENT A CAR ###########\n");
+  printf("####################################\n");
+  while (lista != NULL) {
+    printf("Nome: %s\n", lista->nome);
+    printf("Numero no estoque: %s\n", lista->estoque);
+    printf("Preço da locação: %f\n", lista->precoLocacao);
+    printf("Placa: %s\n", lista->placa);
+    printf("KM rodados: %d\n", lista->kmRodadosVeiculo);
+    printf("Numero de alugueis: %d\n", lista->alugado);
+    printf("\n");
+    lista = lista->proximo;
+  }
+}
+
+
+/*
+      
+struct veiculo {
+  int tipoVeiculo;
+  char nome[40];
+  char estoque[40];
+  char descricao[40];
+  float precoLocacao;
+  char placa[11];
+  int kmRodadosVeiculo;
+  int alugado;
+  char status;
+};
+*/

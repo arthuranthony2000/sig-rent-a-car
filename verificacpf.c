@@ -8,7 +8,7 @@
 #define FALSE 0
 
   
-int VerificaCPF(char num_cpf[40]){
+int verificaCpf(char num_cpf[40]){
     fflush(stdin);
     int i_cpf[11], i,somador=0, resultado,sum, verificador_1, verificador_2, peso; 
     
@@ -54,9 +54,9 @@ int VerificaCPF(char num_cpf[40]){
     }
     
     if ((verificador_1 == i_cpf[9]) && (verificador_2 == i_cpf[10])){
-        return TRUE;
-    }else{
         return FALSE;
+    }else{
+        return TRUE;
     }
     
 
@@ -71,3 +71,4 @@ int isAlpha(const char *cpf){
     } while(*(++cpf));
     return 0;
 }
+
