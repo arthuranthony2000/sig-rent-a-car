@@ -9,15 +9,15 @@
 #include <string.h>
 #include "index.h"
 
-
 void menuInicial(void){
+  system("clear");
   int op;
   FILE* user;
   user = fopen("usuario.dat", "r+b");
   if (user == NULL) {
     cadastraUsuarioInicial();
-  }else{
-    do{
+  }
+  do{
         system("clear");
         fflush(stdin);
         printf("##############################################\n");
@@ -30,22 +30,25 @@ void menuInicial(void){
         printf("####### 2 - SAIR #############################\n");
         printf("##############################################\n>>> ");
         scanf("%d", &op);
+        getchar();
         switch(op){
           case 1:
             system("clear");
             menuLogin();
             break;
           default:
+            system("clear");
             break; 
         }
     }while(op != 2);
-  }
+    fclose(user);
 }
 
 void menuLogin(){
+  system("clear");
   FILE* fp;
   Usuario* user;
-  int achou;
+  int achou = 0;
   char procurado[40];
   char password[40];
   fp = fopen("usuario.dat", "rb");
@@ -60,10 +63,10 @@ void menuLogin(){
   printf("####################################\n");
   printf("######### SIG RENT A CAR ###########\n");
   printf("####################################\n");
-  printf("Informe o username:\n ");
+  printf("Informe o username:\n>>> ");
   scanf(" %39[^\n]", procurado);
   getchar();
-  printf("Informe a senha:\n ");
+  printf("Informe a senha:\n>>> ");
   scanf(" %39[^\n]", password);
   getchar();
   user = (Usuario*) malloc(sizeof(Usuario));
@@ -87,7 +90,7 @@ void menuLogin(){
     if(user->tipoUsuario == '1'){
         cadastraAdministradorInicial(user);
     }else {
-        cadastraOperadorInicial(user);       
+        cadastraOperadorInicial(user);     
     }
   }
         
@@ -100,6 +103,7 @@ void menuLogin(){
 
 
 void menuOperativo(void){
+  system("clear");
   int op;
     do{
         system("clear");
@@ -110,11 +114,13 @@ void menuOperativo(void){
         printf("######### SIG RENT A CAR #####################\n");
         printf("########### BEM VINDO ########################\n");
         printf("##############################################\n");        
-        printf("####### 1 - CLIENTE ####################\n");
-        printf("####### 2 - PEDIDO #####################\n");
-        printf("####### 3 - SAIR     #########################\n");
+        printf("####### 1 - CLIENTE ##########################\n");
+        printf("####### 2 - PEDIDO ###########################\n");
+        printf("####### 3 - RELATORIO ########################\n");
+        printf("####### 4 - SAIR     #########################\n");
         printf("##############################################\n>>> ");
         scanf("%d", &op);
+        getchar();
         switch (op)
         {
         case 1:
@@ -126,14 +132,20 @@ void menuOperativo(void){
             system("clear");
             menuOperativoPedido();
             break;
+        case 3:
+            system("clear");
+            menuRelatorio();
+            break;
         default:
+            system("clear");
             break;
         }
-    }while(op != 3);
+    }while(op != 4);
 }
 
 
 void menuOperativoPedido(void){
+  system("clear");
   int op;
     do{
         system("clear");
@@ -148,9 +160,11 @@ void menuOperativoPedido(void){
         printf("####### 2 - ACESSAR PEDIDO #####################\n");
         printf("####### 3 - ALTERAR PEDIDO #####################\n");
         printf("####### 4 - LISTAR PEDIDO ######################\n");
-        printf("####### 5 - SAIR     #########################\n");
+        printf("####### 5 - DEVOLVER PEDIDO ####################\n");
+        printf("####### 6 - SAIR     #########################\n");
         printf("##############################################\n>>> ");
         scanf("%d", &op);
+        getchar();
         switch (op)
         {
         case 1:
@@ -172,13 +186,19 @@ void menuOperativoPedido(void){
             system("clear");
             listaPedido();
             break;
+        case 5:
+            system("clear");
+            devolverPedido();
+            break;
         default:
+            system("clear");
             break;
         }
-    }while(op != 5);
+    }while(op != 6);
 }
 
 void menuOperativoUsuario(void){
+  system("clear");
   int op;
     do{
         system("clear");
@@ -196,6 +216,7 @@ void menuOperativoUsuario(void){
         printf("####### 5 - SAIR     #########################\n");
         printf("##############################################\n>>> ");
         scanf("%d", &op);
+        getchar();
         switch (op) {
         case 1:
             system("clear");
@@ -216,6 +237,8 @@ void menuOperativoUsuario(void){
             system("clear");
             listaClientes();
             break;
+        case 5:
+            break;
         default:
             system("clear");
             menuInicial();
@@ -225,6 +248,7 @@ void menuOperativoUsuario(void){
 }
 
 void menuAdministrativo(void){
+  system("clear");
   int op;
     do{
         system("clear");
@@ -238,9 +262,10 @@ void menuAdministrativo(void){
         printf("####### 1 - CADASTRAR DADO ###################\n");
         printf("####### 2 - ACESSAR DADO #####################\n");
         printf("####### 3 - ALTERAR DADO #####################\n");
-        printf("####### 4 - LISTAR DADO #####################\n");
+        printf("####### 4 - LISTAR DADO ######################\n");
         printf("####### 5 - DELETAR DADO #####################\n");
-        printf("####### 6 - SAIR     #########################\n");
+        printf("####### 6 - RELATORIO ########################\n");
+        printf("####### 7 - SAIR     #########################\n");
         printf("##############################################\n>>> ");
         scanf("%d", &op);
         switch (op)
@@ -268,28 +293,31 @@ void menuAdministrativo(void){
             system("clear");
             menuDeletarDado();
             break;
+        case 6:
+            system("clear");
+            menuRelatorio();
+            break;
+        case 7:
+            break;
         default:
             system("clear");
             menuInicial();
             break;
         }
-    }while(op != 6);
+    }while(op != 7);
 }
 
 
-
-
-
 void menuCadastrarDado(void){
-    fflush(stdin);
     system("clear");
+    fflush(stdin);
     int op;
     printf("##########################################\n");
     printf("######  MENU  CADASTRO DADO ##############\n");
     printf("##########################################\n");
     printf("######### SIG RENT A CAR #################\n");
     printf("##########################################\n");
-    printf("VOCE DESEJA CADASTRAR O QUE? \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR\n4) VEICULO\n5) USUARIO\n>>> ");
+    printf("VOCE DESEJA CADASTRAR O QUE? \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR\n4) VEICULO\n5) USUARIO \n6)PEDIDO\n7) SAIR\n>>> ");
     scanf("%d", &op);
     switch (op)    {
     case 1:
@@ -312,22 +340,31 @@ void menuCadastrarDado(void){
         cadastraVeiculo();
         break;
     case 5:
+        system("clear");
         cadastraUsuario();
+        break;
+    case 6:
+        system("clear");
+        cadastraPedido();
+        break;
+    case 7:
+        break;
     default:
+        system("clear");
         break;
     }
 }
 
 void menuAcessarDado(void){
-    fflush(stdin);
     system("clear");
+    fflush(stdin);    
     int op;
     printf("##########################################\n");
     printf("######  MENU  ACESSAR DADO ###############\n");
     printf("##########################################\n");
     printf("######### SIG RENT A CAR #################\n");
     printf("##########################################\n");
-    printf("VOCE DESEJA ACESSAR O QUE? \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR\n4) VEICULO\n>>> ");
+    printf("VOCE DESEJA ACESSAR O QUE? \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR\n4) VEICULO \n5) USUARIO \n6) PEDIDO \n7) DEVOLVER PEDIDO\n8) SAIR\n>>> ");
     scanf("%d", &op);
     switch (op)
     {
@@ -346,23 +383,37 @@ void menuAcessarDado(void){
     case 4:
         system("clear");
         buscaVeiculo();
-        break;    
+        break;
+    case 5:
+        system("clear");
+        buscaUsuario();
+        break;
+    case 6:
+        system("clear");
+        buscaPedido();
+    case 7:
+        system("clear");
+        devolverPedido();
+    case 8:
+        break; 
     default:
+        system("clear");
         break;
     }
 }
 
 void menuAlterarDado(void){
-    fflush(stdin);
     system("clear");
+    fflush(stdin);
     int op;
     printf("##########################################\n");
     printf("######  MENU  EDITAR DADO ################\n");
     printf("##########################################\n");
     printf("######### SIG RENT A CAR #################\n");
     printf("##########################################\n");
-    printf("VOCE DESEJA ALTERAR O QUE? \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR\n4) VEICULO\n>>> ");
+    printf("VOCE DESEJA ALTERAR O QUE? \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR\n4) VEICULO\n5) USUARIO \n6) PEDIDO\n7) SAIR\n>>> ");
     scanf("%d", &op);
+    getchar();
     switch (op)
     {
     case 1:
@@ -381,13 +432,25 @@ void menuAlterarDado(void){
         system("clear");
         editaVeiculo();
         break;
+    case 5:
+        system("clear");
+        editaUsuario();
+        break;
+    case 6:
+        system("clear");
+        editaPedido();
+        break;
+    case 7:
+        break;
     default:
+        system("clear");
         break;
     }
 }
 
 
 void menuDeletarDado(void){
+    system("clear");
     int op;
     int id;
     char cpf[11];
@@ -397,74 +460,162 @@ void menuDeletarDado(void){
     printf("##########################################\n");
     printf("######### SIG RENT A CAR #################\n");
     printf("##########################################\n");
-    printf("INSIRA O TIPO DE DADO QUE DESEJA DELETAR \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR \n4)VEICULO\n>>> ");
+    printf("INSIRA O TIPO DE DADO QUE DESEJA DELETAR \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR \n4) VEICULO\n5) USUARIO \n6 PEDIDO\n7) SAIR\n>>> ");
     scanf("%d", &op);
+    getchar();
     switch (op){
     case 1:
         system("clear");
         excluiAdministrador();       
-        // IRA DELETAR O ADMINISTRADOR COM O MODULO DELETE //
         printf("ADMINISTRADOR DELETADO COM SUCESSO !.");
+        getchar();
         break;
     
     case 2:
         system("clear");
         excluiCliente();
-        // IRA DELETAR O CLIENTE COM O MODULO DELETE 
         printf("CLIENTE DELETADO COM SUCESSO !.");
+        getchar();
         break;
     case 3:
         system("clear");
         excluiOperador();
-        printf("OPERADOR DELETADO CCOM SUCESSO !.");
+        printf("OPERADOR DELETADO COM SUCESSO !.");
+        getchar();
         break;
     case 4:
         system("clear");
         excluiVeiculo();
-        // IRA DELETAR O VEICULO COM O MODULO DELETE //
         printf("VEICULO DELETADO COM SUCESSO !.");
+        getchar();
         break;
-    
+    case 5:
+        system("clear");
+        excluiUsuario();
+        printf("USUARIO DELETADO COM SUCESSO !.");
+        getchar();
+        break;
+    case 6:
+        system("clear");
+        excluiPedido();
+        printf("PEDIDO DELETADO COM SUCESSO !.");
+        getchar();
+        break;
+    case 7:
+        break;
     default:
+        system("clear");
         break;
     }
 }
 
 void menuListarDado(void){
+    system("clear");
     int op;
     int id;
     char cpf[11];
-    system("clear");
     printf("##########################################\n");
     printf("######  MENU DELETAR DADO ################\n");
     printf("##########################################\n");
     printf("######### SIG RENT A CAR #################\n");
     printf("##########################################\n");
-    printf("INSIRA O TIPO DE DADO QUE DESEJA LISTAR \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR \n4) VEICULO\n 5) PEDIDO>>> ");
+    printf("INSIRA O TIPO DE DADO QUE DESEJA LISTAR \n1) ADMINISTRADOR \n2) CLIENTE \n3) OPERADOR \n4) VEICULO\n5) USUARIO\n6) PEDIDO\n7) SAIR\n>>> ");
     scanf("%d", &op);
+    getchar();
     switch (op){
     case 1:
         system("clear");
-        listaAdministradores();       
-        break;
-    
+        listaAdministradores();  
+        getchar();     
+        break;    
     case 2:
         system("clear");
-        listaClientes();       
+        listaClientes(); 
+        getchar();      
         break;
     case 3:
         system("clear");
         listaOperador();
+        getchar();
         break;
     case 4:
         system("clear");
         listaVeiculos();
+        getchar();
         break;
     case 5:
         system("clear");
+        listaUsuario();
+        getchar();
+        break;
+    case 6:
+        system("clear");
         listaPedido();
+        getchar();
+        break;
+    case 7:
+        break;
     default:
+        system("clear");
         break;
     }
+}
 
+void menuRelatorio(void){
+    system("clear");
+    int op;
+    int id;
+    char cpf[11];
+    NoVeiculo* lista;
+    printf("##########################################\n");
+    printf("#########  MENU RELATORIO ################\n");
+    printf("##########################################\n");
+    printf("######### SIG RENT A CAR #################\n");
+    printf("##########################################\n");
+    printf("ESCOLHA O RELATORIO: \n1) KM VEICULO(+RODADO) \n2) KM VEICULO(-RODADO) \n3) PREÇO ALUGUEL(+ALTO) \n4) PREÇO ALUGUEL(+BAIXO) \n5) FREQUENCIA ALUGUEL(+FREQUENTE)\n6) FREQUENCIA ALUGUEL(-FREQUENTE)\n7) SAIR \n>>> ");
+    scanf("%d", &op);
+    getchar();
+    switch (op){
+    case 1:
+        system("clear");
+        lista = listaKmRodados();
+        exibeLista(lista);
+        getchar();       
+        break;    
+    case 2:
+        system("clear");
+        lista = listaKmRodadosInvertida();
+        exibeLista(lista);
+        getchar();     
+        break;
+    case 3:
+        system("clear");
+        lista = listaPreco();
+        exibeLista(lista);
+        getchar();
+        break;
+    case 4:
+        system("clear");
+        lista = listaPrecoBaixo();
+        exibeLista(lista);
+        getchar();
+        break;
+    case 5:
+        system("clear");
+        lista = listaAlugado();
+        exibeLista(lista);
+        getchar();
+        break;
+    case 6:
+        system("clear");
+        lista = listaMenosAlugado();
+        exibeLista(lista);
+        getchar();
+        break;
+    case 7:
+        break;
+    default:
+        system("clear");
+        break;
+    }
 }
