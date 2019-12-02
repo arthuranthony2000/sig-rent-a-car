@@ -38,6 +38,7 @@ void menuInicial(void){
             menuLogin();
             break;
           case 2:
+            system("clear");
             sobre();
             break;
           default:
@@ -121,8 +122,7 @@ void menuOperativo(void){
         printf("####### 1 - CLIENTE ##########################\n");
         printf("####### 2 - PEDIDO ###########################\n");
         printf("####### 3 - RELATORIO ########################\n");
-        printf("####### 4 - SOBRE ############################\n");
-        printf("####### 5 - SAIR     #########################\n");
+        printf("####### 4 - SAIR #############################\n");
         printf("##############################################\n>>> ");
         scanf("%d", &op);
         getchar();
@@ -141,14 +141,11 @@ void menuOperativo(void){
             system("clear");
             menuRelatorio();
             break;
-        case 4:
-            sobre();
-            break;
         default:
             system("clear");
             break;
         }
-    }while(op != 5);
+    }while(op != 4);
 }
 
 
@@ -273,8 +270,7 @@ void menuAdministrativo(void){
         printf("####### 4 - LISTAR DADO ######################\n");
         printf("####### 5 - DELETAR DADO #####################\n");
         printf("####### 6 - RELATORIO ########################\n");
-        printf("####### 7 - SOBRE ############################\n");
-        printf("####### 8 - SAIR     #########################\n");
+        printf("####### 7 - SAIR     #########################\n");
         printf("##############################################\n>>> ");
         scanf("%d", &op);
         switch (op)
@@ -306,15 +302,12 @@ void menuAdministrativo(void){
             system("clear");
             menuRelatorio();
             break;
-        case 7:
-            sobre();
-            break;
         default:
             system("clear");
             menuInicial();
             break;
         }
-    }while(op != 8);
+    }while(op != 7);
 }
 
 
@@ -631,7 +624,6 @@ void menuRelatorio(void){
 }
 
 void sobre(void){
-  system("clear");
   printf("##########################################\n");
   printf("######### SIG RENT A CAR #################\n");
   printf("##########################################\n");
