@@ -65,13 +65,13 @@ void buscaUsuario(void){
     if ((strcmp(user->username, procurado) == 0) && (user->status == '1')) {
       achou = 1;
     }
-  
+  }
     if (achou) {
       exibeUsuario(user);
     } else {
       printf("O usuario %s não foi encontrado...\n", procurado);
     }    
-    }
+    
     free(user);
     fclose(fp);
   }

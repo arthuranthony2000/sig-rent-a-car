@@ -165,15 +165,15 @@ void buscaVeiculo(void) {
    if ((strcmp(veiculo->placa, procurado) == 0) && (veiculo->status == '1')) {
      achou = 1;
    }
- 
+ }
   if (achou) {
     exibeVeiculo(veiculo);
   } else {
     printf("O veiculo com a placa %s não foi encontrado...\n", procurado);
   }  
-  }
+  
   free(veiculo);
-   fclose(fp);
+  fclose(fp);
 }
 
 void listaVeiculos(void) {

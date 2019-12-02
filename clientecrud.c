@@ -204,13 +204,14 @@ void buscaCliente(void) {
   while((!achou) && (fread(clien, sizeof(Cliente), 1, fp))) {
    if ((strcmp(clien->cpf, procurado) == 0) && (clien->status == '1')) {
      achou = 1;
-   }  
+   }
+  }  
   if (achou) {
     exibeCliente(clien);
   } else {
     printf("O cliente como cpf %s não foi encontrado...\n", procurado);
   }  
-  }
+  
   free(clien);
   fclose(fp);
 }
