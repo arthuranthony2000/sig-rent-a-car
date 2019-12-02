@@ -7,7 +7,7 @@ typedef struct operador Operador;
 struct operador {
   char email[40];
   char nome[40];
-  char cpf[11];
+  char cpf[12];
   char idade[11];
   char telefone[40];
   char username[40];

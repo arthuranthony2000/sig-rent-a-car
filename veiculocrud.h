@@ -7,10 +7,9 @@ typedef struct noVeiculo NoVeiculo;
 struct veiculo {
   int tipoVeiculo;
   char nome[40];
-  char estoque[40];
   char descricao[40];
   float precoLocacao;
-  char placa[11];
+  char placa[12];
   int kmRodadosVeiculo;
   int alugado;
   char status;
@@ -19,7 +18,6 @@ struct veiculo {
 struct noVeiculo {
   int tipoVeiculo;
   char nome[40];
-  char estoque[40];
   char descricao[40];
   float precoLocacao;
   char placa[11];

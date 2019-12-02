@@ -29,7 +29,7 @@ void cadastraPedido(void) {
   printf("Informe o CPF do cliente: \n>>> ");
   scanf(" %14[^\n]", ped->cpf_cliente);
   getchar();
-  }while(clienPed(ped->cpf_cliente));
+  }while(!clienPed(ped->cpf_cliente));
   fflush(stdin);
   do{
   printf("Informe a placa do veiculo: \n>>> ");

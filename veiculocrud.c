@@ -20,9 +20,6 @@ void cadastraVeiculo(void) {
   scanf(" %39[^\n]", veiculo->nome);
   getchar();
   }while(verificaNome(veiculo->nome));
-  printf("Informe a quantidade do veiculo: \n>>> ");
-  scanf(" %39[^\n]", veiculo->estoque);
-  getchar();
   printf("Informe uma descrição breve do veiculo: \n>>> ");
   scanf(" %39[^\n]", veiculo->descricao);
   getchar();
@@ -99,9 +96,6 @@ void editaVeiculo(void) {
       scanf(" %39[^\n]", veiculo->nome);
       getchar();
       }while(verificaNome(veiculo->nome));
-      printf("Informe a quantidade do veiculo: \n>>> ");
-      scanf(" %39[^\n]", veiculo->estoque);
-      getchar();
       printf("Informe uma descrição breve do veiculo: \n>>> ");
       scanf(" %39[^\n]", veiculo->descricao);
       getchar();
@@ -134,7 +128,6 @@ void editaVeiculo(void) {
 
 void exibeVeiculo(Veiculo* veiculo){
   printf("Nome: %s\n", veiculo->nome);
-  printf("Estoque: %s\n", veiculo->estoque);
   printf("Descrição: %s\n", veiculo->descricao);
   printf("Status: %c\n", veiculo->status);
   printf("Placa: %s\n", veiculo->placa);
@@ -324,7 +317,6 @@ NoVeiculo* listaKmRodados(void) {
       noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
       noVeiculo->tipoVeiculo = veic->tipoVeiculo;
       strcpy(noVeiculo->nome, veic->nome);
-      strcpy(noVeiculo->estoque, veic->estoque);
       strcpy(noVeiculo->descricao, veic->descricao);
       noVeiculo->precoLocacao = veic->precoLocacao;
       strcpy(noVeiculo->placa, veic->placa);
@@ -376,7 +368,6 @@ NoVeiculo* listaKmRodadosInvertida(void) {
       noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
       noVeiculo->tipoVeiculo = veic->tipoVeiculo;
       strcpy(noVeiculo->nome, veic->nome);
-      strcpy(noVeiculo->estoque, veic->estoque);
       strcpy(noVeiculo->descricao, veic->descricao);
       noVeiculo->precoLocacao = veic->precoLocacao;
       strcpy(noVeiculo->placa, veic->placa);
@@ -429,7 +420,6 @@ NoVeiculo* listaPreco(void) {
       noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
       noVeiculo->tipoVeiculo = veic->tipoVeiculo;
       strcpy(noVeiculo->nome, veic->nome);
-      strcpy(noVeiculo->estoque, veic->estoque);
       strcpy(noVeiculo->descricao, veic->descricao);
       noVeiculo->precoLocacao = veic->precoLocacao;
       strcpy(noVeiculo->placa, veic->placa);
@@ -482,7 +472,6 @@ NoVeiculo* listaPrecoBaixo(void) {
       noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
       noVeiculo->tipoVeiculo = veic->tipoVeiculo;
       strcpy(noVeiculo->nome, veic->nome);
-      strcpy(noVeiculo->estoque, veic->estoque);
       strcpy(noVeiculo->descricao, veic->descricao);
       noVeiculo->precoLocacao = veic->precoLocacao;
       strcpy(noVeiculo->placa, veic->placa);
@@ -535,7 +524,6 @@ NoVeiculo* listaAlugado(void) {
       noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
       noVeiculo->tipoVeiculo = veic->tipoVeiculo;
       strcpy(noVeiculo->nome, veic->nome);
-      strcpy(noVeiculo->estoque, veic->estoque);
       strcpy(noVeiculo->descricao, veic->descricao);
       noVeiculo->precoLocacao = veic->precoLocacao;
       strcpy(noVeiculo->placa, veic->placa);
@@ -589,7 +577,6 @@ NoVeiculo* listaMenosAlugado(void) {
       noVeiculo = (NoVeiculo*) malloc(sizeof(NoVeiculo));
       noVeiculo->tipoVeiculo = veic->tipoVeiculo;
       strcpy(noVeiculo->nome, veic->nome);
-      strcpy(noVeiculo->estoque, veic->estoque);
       strcpy(noVeiculo->descricao, veic->descricao);
       noVeiculo->precoLocacao = veic->precoLocacao;
       strcpy(noVeiculo->placa, veic->placa);
@@ -626,7 +613,6 @@ void exibeLista(NoVeiculo* lista) {
   printf("####################################\n");
   while (lista != NULL) {
     printf("Nome: %s\n", lista->nome);
-    printf("Numero no estoque: %s\n", lista->estoque);
     printf("Preço da locação: %f\n", lista->precoLocacao);
     printf("Placa: %s\n", lista->placa);
     printf("KM rodados: %d\n", lista->kmRodadosVeiculo);
@@ -636,18 +622,3 @@ void exibeLista(NoVeiculo* lista) {
   }
 }
 
-
-/*
-      
-struct veiculo {
-  int tipoVeiculo;
-  char nome[40];
-  char estoque[40];
-  char descricao[40];
-  float precoLocacao;
-  char placa[11];
-  int kmRodadosVeiculo;
-  int alugado;
-  char status;
-};
-*/

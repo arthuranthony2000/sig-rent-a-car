@@ -13,14 +13,14 @@ int verificaCpf(char num_cpf[40]){
     int i_cpf[11], i,somador=0, resultado,sum, verificador_1, verificador_2, peso; 
     
     if (num_cpf == NULL){
-        return FALSE;
+        return TRUE;
     } 
     if (strlen(num_cpf)!= CPF){
-        return FALSE;
+        return TRUE;
     }
 
     if (isAlpha(num_cpf)){
-        return FALSE;
+        return TRUE;
     }
     
     for(i=0; i < 11;i++){  

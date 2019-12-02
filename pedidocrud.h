@@ -6,10 +6,10 @@ typedef struct pedido Pedido;
 
 struct pedido{
     char id[10];
-    char cpf_cliente[11];
-    char placa_veiculo[11];
-    char data_inicio[10];
-    char data_final[10];    
+    char cpf_cliente[12];
+    char placa_veiculo[12];
+    char data_inicio[11];
+    char data_final[11];    
     char status;
     int km_rodados_pedido;
 };
