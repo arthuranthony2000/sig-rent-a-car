@@ -304,7 +304,6 @@ void menuAdministrativo(void){
             break;
         default:
             system("clear");
-            menuInicial();
             break;
         }
     }while(op != 7);
