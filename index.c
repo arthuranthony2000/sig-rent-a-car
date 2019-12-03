@@ -242,11 +242,8 @@ void menuOperativoUsuario(void){
             system("clear");
             listaClientes();
             break;
-        case 5:
-            break;
         default:
             system("clear");
-            menuInicial();
             break;
         }
     }while(op != 5);
@@ -349,8 +346,6 @@ void menuCadastrarDado(void){
         system("clear");
         cadastraPedido();
         break;
-    case 7:
-        break;
     default:
         system("clear");
         break;
@@ -396,8 +391,7 @@ void menuAcessarDado(void){
     case 7:
         system("clear");
         devolverPedido();
-    case 8:
-        break; 
+        break;
     default:
         system("clear");
         break;
@@ -441,8 +435,6 @@ void menuAlterarDado(void){
     case 6:
         system("clear");
         editaPedido();
-        break;
-    case 7:
         break;
     default:
         system("clear");
@@ -503,8 +495,6 @@ void menuDeletarDado(void){
         printf("PEDIDO DELETADO COM SUCESSO !.");
         getchar();
         break;
-    case 7:
-        break;
     default:
         system("clear");
         break;
@@ -554,8 +544,6 @@ void menuListarDado(void){
         system("clear");
         listaPedido();
         getchar();
-        break;
-    case 7:
         break;
     default:
         system("clear");
@@ -613,8 +601,6 @@ void menuRelatorio(void){
         lista = listaMenosAlugado();
         exibeLista(lista);
         getchar();
-        break;
-    case 7:
         break;
     default:
         system("clear");
